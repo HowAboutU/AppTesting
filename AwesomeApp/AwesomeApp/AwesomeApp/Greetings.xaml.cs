@@ -16,21 +16,50 @@ namespace AwesomeApp
         {
             InitializeComponent();
 
-            FormattedString formattedString = new FormattableString();
-            formattedString.Spans.Add(new Span
+            FormattedString formattedString = new FormattedString();
+            NamedSize[] namedSizes =
             {
-                Text = "I "
-            });
+                NamedSize.Default,
+                NamedSize.Micro,
+                NamedSize.Small,
+                NamedSize.Medium,
+                NamedSize.Large
+            };
 
-            formattedString.Spans.Add(new Span {
-                Text ="love",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                FontAttributes = FontAttributes.Bold
-            });
+            foreach (NamedSize namedSize in namedSizes)
+            {
+                double fontsize = Device.GetNamedSize(namedSize, typeof(Label));
+                formattedString.Spans.Add(new Span
+                {
+                    Text = String.Format("Named Size = {0} ({1:F2})", 
+                    namedSize, fontsize),
+                    FontSize = fontsize
+                });
 
-            formattedString.Spans.Add(new Span {
-                Text = " Xamarin.Forms!"
-            });
+                if (namedSize != namedSizes.Last())
+                {
+                    formattedString.Spans.Add(new Span
+                    { 
+                        Text = Environment.NewLine + Environment.NewLine
+                    });
+
+                }
+            }
+
+            //formattedString.Spans.Add(new Span
+            //{
+            //    Text = "I "
+            //});
+
+            //formattedString.Spans.Add(new Span {
+            //    Text ="love",
+            //    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+            //    FontAttributes = FontAttributes.Bold
+            //});
+
+            //formattedString.Spans.Add(new Span {
+            //    Text = " Xamarin.Forms!"
+            //});
 
             Content = new Label
             {
@@ -40,7 +69,7 @@ namespace AwesomeApp
                 VerticalOptions = LayoutOptions.Center,
                 //BackgroundColor = Color.FromRgb(1, 0, 0),
                 //TextColor = Color.FromRgb(1.0, 0, 0),
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
+                //FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label))
                 //FontAttributes = FontAttributes.Bold | FontAttributes.Italic
             };
 
